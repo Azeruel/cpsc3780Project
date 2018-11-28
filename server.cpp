@@ -11,7 +11,7 @@ void serverThreads(ServerSocket sSock){
         while (true){
             std::string data;
             sSock>> data;
-            sSock << data;
+            sSock<< data;
         }
     }
     catch(SocketException&){
@@ -35,14 +35,15 @@ int main()
             server.accept(new_sock);
 
             std::thread th1(serverThreads,(new_sock), 1);
-            th1.join();
             std::thread th2(serverThreads,(new_sock), 2);
-            th2.join();
             std::thread th3(serverThreads,(new_sock), 3);
-            th3.join();
             std::thread th4(serverThreads,(new_sock), 4);
-            th4.join();
             std::thread th5(serverThreads,(new_sock), 5);
+
+            th1.join();
+            th2.join();
+            th3.join();
+            th4.join();
             th5.join();
         }
     }
